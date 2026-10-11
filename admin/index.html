@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#05070c" />
+  <title>Admin — Perp Farming Guide</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="ambient" aria-hidden="true">
+    <span class="ambient__orb ambient__orb--mint"></span>
+    <span class="ambient__orb ambient__orb--violet"></span>
+  </div>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="/">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="26" height="26" fill="none" aria-hidden="true">
+            <rect x="1.5" y="1.5" width="29" height="29" rx="9" stroke="currentColor" stroke-opacity=".35" />
+            <path d="M10 21.5V15m6 6.5V10.5m6 11v-4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+          </svg>
+        </span>
+        <span class="brand__text">Perp&nbsp;Farming&nbsp;<strong>Guide</strong></span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <span class="chip chip--points" id="mode-chip">checking…</span>
+        <a class="btn btn--ghost btn--sm" href="/">View site</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <!-- Passphrase gate -->
+    <section class="view" id="gate">
+      <div class="container admin-narrow">
+        <header class="page-head">
+          <span class="page-head__tag">Local admin</span>
+          <h1>Sign in</h1>
+          <p>Add, edit and remove perp DEXs without touching the JSON by hand.</p>
+        </header>
+
+        <form class="glass admin-card" id="gate-form" autocomplete="off">
+          <label class="field">
+            <span class="field__label">Passphrase</span>
+            <input class="input" type="password" id="pass" required autofocus />
+          </label>
+          <p class="field__hint">
+            Default <code>perpfarm</code> — change it with <code>ADMIN_PASS=yourword npm start</code>.
+            This gate only exists on your machine: the deployed site is static and has no write access.
+          </p>
+          <p class="form-error" id="gate-error" role="alert" hidden></p>
+          <button class="btn btn--accent btn--block" type="submit">Unlock</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Editor -->
+    <section class="view" id="editor" hidden>
+      <div class="container">
+        <a class="back-link" href="/"><span aria-hidden="true">←</span> Back to the site</a>
+
+        <header class="page-head">
+          <span class="page-head__tag">Data · dexes.json</span>
+          <h1>Manage DEXs</h1>
+          <p>Every save updates <code>data/dexes.json</code>. Order on the pages follows <strong>displayOrder</strong>.</p>
+        </header>
+
+        <div class="admin-layout">
+          <!-- List -->
+          <div class="glass admin-panel">
+            <div class="admin-panel__head">
+              <h2>Current DEXs <span class="admin-count" id="list-count"></span></h2>
+              <button class="btn btn--accent btn--sm" type="button" id="btn-new">+ New DEX</button>
+            </div>
+            <ul class="admin-list" id="list"></ul>
+            <div class="admin-actions">
+              <button class="btn btn--accent" type="button" id="btn-save">Save to dexes.json</button>
+              <button class="btn btn--ghost" type="button" id="btn-download">Download dexes.json</button>
+              <button class="btn btn--ghost" type="button" id="btn-copy">Copy JSON</button>
+            </div>
+            <p class="form-error" id="save-error" role="alert" hidden></p>
+            <p class="form-ok" id="save-ok" role="status" hidden></p>
+          </div>
+
+          <!-- Form -->
+          <form class="glass admin-panel" id="form" hidden>
+            <div class="admin-panel__head">
+              <h2 id="form-title">New DEX</h2>
+              <button class="icon-btn" type="button" id="btn-cancel" aria-label="Cancel editing">
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+              </button>
+            </div>
+
+            <div class="field-row">
+              <label class="field">
+                <span class="field__label">Name *</span>
+                <input class="input" name="name" required placeholder="Arcus" />
+              </label>
+              <label class="field">
+                <span class="field__label">ID (slug) *</span>
+                <input class="input" name="id" required pattern="[a-z0-9-]+" placeholder="arcus" />
+              </label>
+            </div>
+
+            <div class="field-row">
+              <label class="field">
+                <span class="field__label">Referral URL *</span>
+                <input class="input" name="referralUrl" type="url" required placeholder="https://app.example.com/?ref=CODE" />
+              </label>
+              <label class="field">
+                <span class="field__label">Status</span>
+                <select class="input" name="status">
+                  <option value="active">active</option>
+                  <option value="coming soon">coming soon</option>
+                </select>
+              </label>
+            </div>
+
+            <label class="field">
+              <span class="field__label">Short description *</span>
+              <textarea class="input" name="shortDescription" rows="3" required></textarea>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Latest updates <span class="field__opt">— one per line</span></span>
+              <textarea class="input" name="latestUpdates" rows="5" placeholder="Points program launched.&#10;New listings added."></textarea>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Points / Rewards *</span>
+              <textarea class="input" name="pointsInfo" rows="4" required></textarea>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Funding / Rival potential *</span>
+              <textarea class="input" name="fundingInfo" rows="4" required></textarea>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Speculation <span class="field__opt">— one per line, each gets a badge</span></span>
+              <textarea class="input" name="speculation" rows="2"></textarea>
+            </label>
+
+            <div class="field-row">
+              <label class="field">
+                <span class="field__label">Display order *</span>
+                <input class="input" name="displayOrder" type="number" min="1" step="1" required value="8" />
+              </label>
+              <label class="field">
+                <span class="field__label">Status chip</span>
+                <input class="input" value="computed from status" disabled />
+              </label>
+            </div>
+
+            <!-- Logo -->
+            <fieldset class="field-group">
+              <legend class="field__label">Logo</legend>
+              <div class="upload">
+                <img class="upload__preview" id="logo-preview" alt="" hidden />
+                <div class="upload__body">
+                  <input class="input" name="logo" id="logo-path" placeholder="/assets/logos/arcus.webp" />
+                  <div class="upload__row">
+                    <label class="btn btn--ghost btn--sm">
+                      Choose image
+                      <input type="file" accept="image/*" id="logo-file" class="sr-only" />
+                    </label>
+                    <button class="btn btn--ghost btn--sm" type="button" id="logo-upload" hidden>Upload image</button>
+                    <span class="field__opt" id="logo-note"></span>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- Points sheet -->
+            <fieldset class="field-group">
+              <legend class="field__label">Points sheet image</legend>
+              <label class="check">
+                <input type="checkbox" name="hasPointsSheet" id="has-sheet" />
+                <span>This DEX has a points sheet (shows under the description, click-to-zoom)</span>
+              </label>
+              <div class="upload" id="sheet-block" hidden>
+                <img class="upload__preview" id="sheet-preview" alt="" hidden />
+                <div class="upload__body">
+                  <input class="input" name="pointsSheetImage" id="sheet-path" placeholder="/assets/points-sheets/arcus-points-sheet.png" />
+                  <label class="field">
+                    <span class="field__label">Alt text (accessibility)</span>
+                    <input class="input" name="pointsSheetAlt" id="sheet-alt" placeholder="Arcus points sheet" />
+                  </label>
+                  <div class="upload__row">
+                    <label class="btn btn--ghost btn--sm">
+                      Choose image
+                      <input type="file" accept="image/*" id="sheet-file" class="sr-only" />
+                    </label>
+                    <button class="btn btn--ghost btn--sm" type="button" id="sheet-upload" hidden>Upload image</button>
+                    <span class="field__opt" id="sheet-note"></span>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <div class="admin-actions">
+              <button class="btn btn--accent" type="submit">Apply to list</button>
+              <button class="btn btn--ghost" type="button" id="btn-delete" hidden>Delete</button>
+            </div>
+            <p class="form-error" id="form-error" role="alert" hidden></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p class="site-footer__note">
+        Local helper for <code>data/dexes.json</code>. On a deployed (static) host the Save button falls back
+        to downloading the file, because there is no server to write to.
+      </p>
+    </div>
+  </footer>
+
+  <script type="module" src="/admin/admin.js"></script>
+</body>
+</html>

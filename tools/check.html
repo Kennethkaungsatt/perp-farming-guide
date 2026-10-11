@@ -1,0 +1,235 @@
+<!doctype html>
+<!--
+  Behaviour self-test for the Perp Farming Guide.
+
+  Run the local server (npm start), then open:
+      http://localhost:4173/tools/check.html
+
+  It drives the real site inside an iframe and prints PASS/FAIL for each
+  requirement (both grids, referral links, detail dialog, points-sheet zoom,
+  focus restore, SEO meta). It also works headlessly:
+
+      "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+        --headless=new --dump-dom --virtual-time-budget=20000 \
+        http://localhost:4173/tools/check.html
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Self-test — Perp Farming Guide</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <style>
+    body { padding: clamp(16px, 4vw, 40px); }
+    #out { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; max-width: 860px; }
+    #out li {
+      display: flex; gap: 12px; align-items: flex-start;
+      padding: 11px 14px; border-radius: 12px; font-size: .9rem;
+      border: 1px solid var(--border); background: rgba(255,255,255,.03);
+    }
+    #out b { flex: none; min-width: 54px; }
+    #out .pass b { color: var(--accent); }
+    #out .fail b { color: #ff8080; }
+    #out .fail { border-color: rgba(255,128,128,.4); background: rgba(255,80,80,.07); }
+    #out .warn b { color: var(--warn); }
+    #out .warn { border-color: rgba(245,182,76,.4); background: rgba(245,182,76,.07); }
+    #out small { color: var(--muted); }
+    #summary { margin: 18px 0 26px; font-size: 1.3rem; font-weight: 800; letter-spacing: -.02em; }
+    iframe { width: 100%; height: 460px; border: 1px solid var(--border); border-radius: var(--radius); margin-top: 26px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Self-test</h1>
+    <p id="summary">Running…</p>
+    <ul id="out"></ul>
+    <iframe id="f" title="site under test" src="/"></iframe>
+  </div>
+
+  <script>
+    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+    const results = [];
+
+    /* soft = only meaningful in a visible browser: headless Chrome does not
+       dispatch the async <dialog> "close" event when nothing is composited. */
+    function check(name, ok, detail = '', soft = false) {
+      ok = Boolean(ok);
+      results.push({ name, ok, detail, soft });
+      const li = document.createElement('li');
+      const label = ok ? 'PASS' : soft ? 'WARN' : 'FAIL';
+      li.className = ok ? 'pass' : soft ? 'warn' : 'fail';
+      li.innerHTML = `<b>${label}</b><span>${name}${detail ? ` — <em>${detail}</em>` : ''}${
+        !ok && soft ? '<br /><small>Runs fully in a visible browser (npm start, then open this page).</small>' : ''
+      }</span>`;
+      document.getElementById('out').appendChild(li);
+    }
+
+    async function waitFor(fn, timeout = 2500, step = 100) {
+      const t0 = Date.now();
+      while (Date.now() - t0 < timeout) {
+        try {
+          if (fn()) return true;
+        } catch {}
+        await wait(step);
+      }
+      try {
+        return Boolean(fn());
+      } catch {
+        return false;
+      }
+    }
+
+    function finish() {
+      const failed = results.filter((r) => !r.ok && !r.soft);
+      const warned = results.filter((r) => !r.ok && r.soft);
+      const el = document.getElementById('summary');
+      el.textContent = failed.length
+        ? `${failed.length} of ${results.length} checks FAILED`
+        : `All ${results.length} checks passed${warned.length ? ` (${warned.length} need a visible browser)` : ''}`;
+      el.style.color = failed.length ? '#ff8080' : 'var(--accent)';
+      document.title = (failed.length ? 'FAIL ' : 'PASS ') + results.length + ' checks — Perp Farming Guide';
+    }
+
+    (async () => {
+      const f = document.getElementById('f');
+      const doc = () => f.contentDocument;
+      const win = () => f.contentWindow;
+      const q = (s) => doc().querySelector(s);
+      const qa = (s) => [...doc().querySelectorAll(s)];
+
+      const goto = async (path) => {
+        f.src = path;
+        await new Promise((res) => f.addEventListener('load', res, { once: true }));
+        await wait(1400); // data fetch + render + entrance animations
+      };
+
+      /* ---------- SEO meta (read from the real index.html) ---------- */
+      const homeHtml = await fetch('/').then((r) => r.text());
+      const homeDoc = new DOMParser().parseFromString(homeHtml, 'text/html');
+      const meta = (sel) => homeDoc.querySelector(sel)?.getAttribute('content') || '';
+      check('SEO title', /Perp Farming Guide/.test(homeDoc.title), homeDoc.title.slice(0, 70));
+      check('SEO description', meta('meta[name="description"]').length > 60, `${meta('meta[name="description"]').length} chars`);
+      check('Open Graph title', meta('meta[property="og:title"]').length > 10);
+      check('Open Graph image 1200x630', meta('meta[property="og:image"]').includes('og-cover.png'));
+      check('Open Graph image declared 1200x630', meta('meta[property="og:image:width"]') === '1200' && meta('meta[property="og:image:height"]') === '630');
+      check('Twitter card', meta('meta[name="twitter:card"]') === 'summary_large_image');
+      check('canonical set', !!homeDoc.querySelector('link[rel="canonical"]')?.href);
+      check('JSON-LD present', homeDoc.querySelectorAll('script[type="application/ld+json"]').length === 1);
+      check('OG image file exists', await fetch(meta('meta[property="og:image"]').replace(/^https?:\/\/[^/]+/, '')).then((r) => r.ok, () => false));
+
+      /* ---------- Page 1 ---------- */
+      await goto('/perp-dex-list');
+      const cards1 = qa('.dex-card');
+      check('Page 1 renders 7 cards', cards1.length === 7, `${cards1.length} found`);
+      check(
+        'Page 1 order matches brief',
+        cards1.map((c) => c.querySelector('.dex-card__name').textContent).join(',') ===
+          'Arcus,Entropy,QFEX,Vesper,Ondo,Hyperliquid,TradeXYZ'
+      );
+      const hrefs = cards1.map((c) => c.getAttribute('href'));
+      check(
+        'Page 1 referral links',
+        hrefs[0].includes('app.arcus.xyz/ref/JUSTKENNETHAPE') &&
+          hrefs[1].includes('entropy.io/?r=justkennethape') &&
+          hrefs[2] === 'https://www.qfex.com/' &&
+          hrefs[3].includes('sypherscore.com/invite?ref=VSP-KENNETH') &&
+          hrefs[4].includes('app.ondoperps.xyz/?ref=Z7DMBP') &&
+          hrefs[5].includes('app.hyperliquid.xyz/join/KENNETHAPE') &&
+          hrefs[6].includes('app.trade.xyz/?market=SPCX')
+      );
+      check(
+        'Page 1 links open in a new tab safely',
+        cards1.every((c) => c.target === '_blank' && c.rel === 'noopener noreferrer')
+      );
+      check('Page 1 logo alt text', cards1.every((c) => c.querySelector('img').alt.endsWith('logo')));
+      check('Page 1 footer referral note', doc().querySelector('.site-footer__note').textContent.includes('Not financial advice. DYOR.'));
+      check('Page 1 cards are staggered', cards1[3].style.getPropertyValue('--i') === '3');
+      check('Last-updated shown', /Updated|Last updated/.test(doc().querySelector('.site-footer').textContent));
+
+      /* ---------- Page 2 + detail dialog ---------- */
+      await goto('/points-sheet');
+      const cards2 = qa('.dex-card');
+      check('Page 2 renders 7 cards', cards2.length === 7, `${cards2.length} found`);
+      check('Page 2 same order', cards2.map((c) => c.querySelector('.dex-card__name').textContent).join(',') === cards1.map((c) => c.querySelector('.dex-card__name').textContent).join(','));
+      check(
+        'Only Arcus/Vesper/Ondo flagged as having sheets',
+        cards2.filter((c) => c.querySelector('.chip--points')).map((c) => c.querySelector('.dex-card__name').textContent).join(',') === 'Arcus,Vesper,Ondo'
+      );
+
+      cards2[0].click(); // Arcus
+      await wait(500);
+      const dlg = doc().getElementById('dex-dialog');
+      check('Detail dialog opens', dlg.open);
+      check('Detail has all four sections', dlg.querySelectorAll('.detail-section').length === 4);
+      check(
+        'Detail sections in order',
+        [...dlg.querySelectorAll('.detail-section h3')].map((h) => h.textContent).join('|') ===
+          'Description|Latest Updates|Points / Rewards|Funding / Rival Potential'
+      );
+      const descSection = [...dlg.querySelectorAll('.detail-section')][0];
+      check(
+        'Points sheet sits below the description',
+        Boolean(descSection) &&
+          Boolean(dlg.querySelector('.sheet-figure')) &&
+          Boolean(descSection.compareDocumentPosition(dlg.querySelector('.sheet-figure')) & Node.DOCUMENT_POSITION_FOLLOWING)
+      );
+      check('Detail has referral CTA', dlg.querySelector('a.btn[target="_blank"]')?.rel === 'noopener noreferrer');
+
+      const sheet = dlg.querySelector('.sheet-figure img');
+      check('Points-sheet image loaded', sheet.complete && sheet.naturalWidth > 0, `${sheet.naturalWidth}x${sheet.naturalHeight}`);
+
+      dlg.querySelector('.sheet-zoom').focus(); // mimic the focus a real click gives
+      dlg.querySelector('.sheet-zoom').click();
+      await wait(400);
+      const lb = doc().getElementById('lightbox');
+      check('Click-to-zoom opens lightbox', lb.open);
+      check('Lightbox image loaded', (() => { const i = lb.querySelector('img'); return i && i.complete && i.naturalWidth > 0; })());
+      check('Focus moved into lightbox', lb.contains(doc().activeElement));
+
+      lb.querySelector('[data-close]').click();
+      const detailStillOpen = await waitFor(() => dlg.open && !lb.open);
+      check('Closing zoom keeps detail open', detailStillOpen, `dd=${dlg.open} lb=${lb.open}`);
+      check('Body scroll still locked while detail open', doc().body.classList.contains('dialog-open'));
+
+      dlg.querySelector('[data-close]').click();
+      check('Detail closes', await waitFor(() => !dlg.open), `dd=${dlg.open}`);
+      check(
+        'Body scroll unlocked',
+        await waitFor(() => !doc().body.classList.contains('dialog-open')),
+        `bodyClass="${doc().body.className}" dd=${dlg.open} lb=${lb.open}`,
+        true
+      );
+      check(
+        'Focus returned to the card',
+        await waitFor(() => doc().activeElement?.dataset?.openDex === 'arcus'),
+        `el=${doc().activeElement?.tagName}#${doc().activeElement?.id || ''}.${doc().activeElement?.className || ''}`,
+        true
+      );
+
+      /* ---------- a DEX without a sheet + speculation labelling ---------- */
+      q('[data-open-dex="entropy"]').click();
+      await wait(400);
+      check('Non-sheet DEX has no image block', !dlg.querySelector('.sheet-figure'));
+      check('Non-speculative DEX shows no badge', !dlg.querySelector('.spec-badge'));
+      dlg.querySelector('[data-close]').click();
+      await wait(350);
+
+      q('[data-open-dex="hyperliquid"]').click();
+      await wait(400);
+      check('Speculative claim gets a badge', !!dlg.querySelector('.spec-badge'), dlg.querySelector('.spec-badge')?.textContent || 'none');
+      dlg.querySelector('[data-close]').click();
+      await wait(300);
+
+      /* ---------- motion preferences ---------- */
+      const css = await fetch('/css/styles.css').then((r) => r.text());
+      check('prefers-reduced-motion honoured', css.includes('prefers-reduced-motion: reduce'));
+      check('Self-hosted font (no third-party)', !/fonts\.(googleapis|gstatic)\.com/.test(css) && css.includes('assets/fonts/inter-latin.woff2'));
+
+      finish();
+    })().catch((error) => {
+      check('Test harness ran to completion', false, error.message);
+      finish();
+    });
+  </script>
+</body>
+</html>

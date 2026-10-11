@@ -1,0 +1,9 @@
+# Netlify config — static site, no build step.
+# Existing files (css/js/assets) always win over this redirect.
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

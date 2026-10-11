@@ -1,0 +1,21 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# dependencies (the site itself has none — only optional dev tools)
+node_modules/
+
+# local env / secrets — never commit
+.env
+.env.*
+*.local
+
+# logs
+*.log
+npm-debug.log*
+
+# generated/scratch output
+/tmp/

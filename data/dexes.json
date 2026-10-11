@@ -1,0 +1,162 @@
+{
+  "$comment": "Single source of truth for every Perp DEX shown on the site. Add an object to this array and the DEX appears automatically on both pages (icon, link, animations and detail view). Order on the page is controlled by displayOrder.",
+  "dexes": [
+    {
+      "id": "arcus",
+      "name": "Arcus",
+      "logo": "/assets/logos/arcus.webp",
+      "referralUrl": "https://app.arcus.xyz/ref/JUSTKENNETHAPE",
+      "status": "active",
+      "shortDescription": "A decentralized exchange built by the dYdX team with Robinhood Crypto on Robinhood Chain. 24/7 trading of tokenized stocks with zero spot fees, plus perpetual futures on equities, crypto, commodities and indices. Spot is open to eligible users; perps are invite-only.",
+      "latestUpdates": [
+        "Arcus Points launched Oct 1, 2026.",
+        "Season 0 (private beta, Jul 1 to Sep 30) is finished: rankings are visible, but point amounts stay hidden for now.",
+        "Season 1 pays a fixed 250,000 points every Wednesday at 3 PM ET, scored on trading quality, market making, retained deposits and referrals.",
+        "Current boosts apply to stock tokens, off-hours RWA perps and Robinhood Wallet swaps.",
+        "The points program ends no later than the end of H1 2027."
+      ],
+      "pointsInfo": "Arcus Points are live (launched Oct 1, 2026). Season 1 distributes a fixed pool of 250,000 points every Wednesday at 3 PM ET, weighted by trading quality, market making, retained deposits and referrals, with current boosts for stock tokens, off-hours RWA perps and Robinhood Wallet swaps. Season 0 rankings are visible while point amounts stay hidden. The program ends no later than the end of H1 2027.",
+      "fundingInfo": "No funding figures disclosed. The edge is pedigree and distribution rather than capital: the venue is built by the dYdX team and runs with Robinhood Crypto on Robinhood Chain, which puts it in front of a large existing retail audience where most rivals have to buy their own users.",
+      "hasPointsSheet": true,
+      "pointsSheetImage": "/assets/points-sheets/arcus-points-sheet.png",
+      "pointsSheetAlt": "Arcus points sheet: how Season 0 and Season 1 points are earned and distributed",
+      "displayOrder": 1
+    },
+    {
+      "id": "entropy",
+      "name": "Entropy",
+      "logo": "/assets/logos/entropy.webp",
+      "referralUrl": "https://entropy.io/?r=justkennethape",
+      "status": "active",
+      "shortDescription": "A Hyperliquid HIP-3 deployer for 24/7 perps on frontier assets: pre-IPO names like Anthropic and OpenAI, equities such as SNDK, NBIS and Tencent, plus indices and commodities.",
+      "latestUpdates": [
+        "Partner Program launched in late Sep 2026 for creators and affiliates, with Tier 4 benefits and cash bonuses ($10 per qualified user, $15 at $1M volume).",
+        "Affiliate badges added.",
+        "Trust Wallet integration live.",
+        "Leaderboard added.",
+        "New listings and higher leverage."
+      ],
+      "pointsInfo": "No official points and no announced airdrop. Rewards are volume-based: fee rebates and referrals (tiers up to Partner at $50M 30-day volume), self-rebates up to 200% and referral rewards up to 100% of Entropy's fee share, all paid in HYPE.",
+      "fundingInfo": "$14M seed led by Ribbit Capital plus $40M of HYPE support; team from Citadel, Optiver and Millennium. $1.6B+ cumulative volume and ~$65M open interest. Still niche versus TradeXYZ, but it has a realistic chance in the pre-IPO and frontier segments.",
+      "hasPointsSheet": false,
+      "pointsSheetImage": null,
+      "pointsSheetAlt": null,
+      "displayOrder": 2
+    },
+    {
+      "id": "qfex",
+      "name": "QFEX",
+      "logo": "/assets/logos/qfex.webp",
+      "referralUrl": "https://www.qfex.com/",
+      "status": "active",
+      "shortDescription": "A hybrid 24/7 perpetual futures exchange (CLOB) with up to 50x leverage on global equities, indices, commodities and FX, USDC margining, microsecond latency and fiat/crypto rails.",
+      "latestUpdates": [
+        "Frequent new 24/7 listings (e.g. QNT, GME, VLO, LUNR).",
+        "Loss Refunds campaign: 20% of eligible losing traders are randomly chosen to get 100% of realized losses refunded, up to $2,000.",
+        "Community events running.",
+        "CEO confirmed Season 0 activity tracking."
+      ],
+      "pointsInfo": "Season 0 is active and retroactively counts volume, fees, open interest, deposits, referrals, product feedback and community engagement from day one. Tiered referrals pay up to 30% of net fees on Level 1, plus lifetime low fees for early users. There is no official token and no points dashboard yet.",
+      "fundingInfo": "$9.5M seed led by General Catalyst, with Y Combinator, Paul Graham, Nexus Venture Partners and others, at a $95M valuation. Team from Citadel, Tower Research, Flow Traders, Jump, HRT, Jane Street and Optiver. $270M+ open interest across ~200+ markets.",
+      "speculation": [
+        "A QFEX token or airdrop is speculative. Season 0 activity is tracked, but no token has been announced."
+      ],
+      "hasPointsSheet": false,
+      "pointsSheetImage": null,
+      "pointsSheetAlt": null,
+      "displayOrder": 3
+    },
+    {
+      "id": "vesper",
+      "name": "Vesper",
+      "logo": "/assets/logos/vesper.webp",
+      "referralUrl": "https://sypherscore.com/invite?ref=VSP-KENNETH",
+      "status": "active",
+      "shortDescription": "A non-custodial, autonomous market-making bot for perp DEXs that runs on your own account. It quotes both sides of the book, adapts to market regimes and hedges delta-neutral.",
+      "latestUpdates": [
+        "Ongoing V-Points distributions (e.g. 100k points weekly to hundreds of wallets).",
+        "New modes such as Aurum (Ondo gold / S&P at low CPM).",
+        "EntropyIO performance improved (30% lower CPM, faster execution).",
+        "Support across Ondo, EntropyIO, QFEX, Arcus, RISEx, Lighter and more.",
+        "$410M+ volume on Ondo and $170M+ weekly multi-venue."
+      ],
+      "pointsInfo": "Its own V-Points program rewards volume across supported venues. You also farm points on the underlying platforms at a low cost-per-million, plus referral fee shares.",
+      "fundingInfo": "Early-stage tool, not a trading venue, with no major disclosed funding. Rather than competing with the exchanges, it helps drive volume on them, so its growth is tied to their points programs.",
+      "hasPointsSheet": true,
+      "pointsSheetImage": "/assets/points-sheets/vesper-points-sheet.png",
+      "pointsSheetAlt": "Vesper points sheet: V-Points rewards, modes and cost-per-million breakdown",
+      "displayOrder": 4
+    },
+    {
+      "id": "ondo",
+      "name": "Ondo",
+      "logo": "/assets/logos/ondo.webp",
+      "referralUrl": "https://app.ondoperps.xyz/?ref=Z7DMBP",
+      "status": "active",
+      "shortDescription": "24/7 perps on US stocks, ETFs, indices and commodities (NVDA, TSLA, AAPL, gold, oil, SpaceX and more) with up to 20 to 25x leverage. Ondo tokenized stocks can be used as collateral for capital-efficient trading and basis strategies.",
+      "latestUpdates": [
+        "Spot trading live for Ondo Stocks, enabling single-platform basis trades.",
+        "Spot trading campaign with USDC rewards (up to $100).",
+        "Expanding markets and collateral options.",
+        "Arbitrum USDC funding.",
+        "Tens of billions in cumulative volume (~$15B+ recently noted)."
+      ],
+      "pointsInfo": "Ondo Points: 5M points distributed weekly based on trading volume plus an open interest score, alongside weekly USDC trading rewards, a referral program and deposit incentives. Points are non-transferable loyalty units, not a confirmed token airdrop.",
+      "fundingInfo": "Backed by Ondo Finance ($20M+ Series A from Founders Fund, Pantera, Coinbase Ventures and others; $1B+ tokenized stocks TVL). Tokenized equity collateral is the differentiator: it lets the same capital work across spot and perps.",
+      "speculation": [
+        "A token airdrop is not confirmed. Points are non-transferable loyalty units, so treat any Ondo token expectation as speculation."
+      ],
+      "hasPointsSheet": true,
+      "pointsSheetImage": "/assets/points-sheets/ondo-points-sheet.png",
+      "pointsSheetAlt": "Ondo perps point value sheet: how Ondo Points convert and what earns them",
+      "displayOrder": 5
+    },
+    {
+      "id": "hyperliquid",
+      "name": "Hyperliquid",
+      "logo": "/assets/logos/hyperliquid.webp",
+      "referralUrl": "https://app.hyperliquid.xyz/join/KENNETHAPE",
+      "status": "active",
+      "shortDescription": "The leading onchain infrastructure for 24/7 perp and spot trading of crypto, commodities, indices, FX and real-world assets. HIP-3 enables permissionless, builder-deployed markets (like TradeXYZ).",
+      "latestUpdates": [
+        "Open interest at all-time highs ($18B).",
+        "Trailing stops for perps.",
+        "$1.4B+ cumulative revenue, with the majority used for HYPE buybacks.",
+        "Community events (e.g. Singapore, Oct 5).",
+        "Growing institutional visibility and a widening HyperEVM ecosystem."
+      ],
+      "pointsInfo": "The original points program (genesis airdrop of ~31% of the HYPE supply) ended in 2024. No official new season is confirmed as of October 2026. Activity is rewarded through fees, staking discounts, referrals and buybacks.",
+      "speculation": [
+        "Speculation: the community farms volume, staking, HyperEVM and HIP-3 in hopes of a future season. Optimistic timelines point to late 2026 to 2027, but nothing is official."
+      ],
+      "fundingInfo": "No traditional VC. It is the dominant onchain perps platform, funding itself through fees and buybacks rather than venture rounds, which is why it sets the pace the other venues benchmark against.",
+      "hasPointsSheet": false,
+      "pointsSheetImage": null,
+      "pointsSheetAlt": null,
+      "displayOrder": 6
+    },
+    {
+      "id": "tradexyz",
+      "name": "TradeXYZ",
+      "logo": "/assets/logos/tradexyz.webp",
+      "referralUrl": "https://app.trade.xyz/?market=SPCX&chart=candles",
+      "status": "active",
+      "shortDescription": "The dominant HIP-3 deployer on Hyperliquid, with 100+ 24/7 perp markets on US/global stocks, indices, commodities, FX and pre-IPO names (e.g. SpaceX), USDC-margined, plus Growth Mode for sharply reduced fees.",
+      "latestUpdates": [
+        "New listings (e.g. LRCX, TWST) at 10x.",
+        "Corporate action handling (splits and settlements).",
+        "HIP-4 event contracts.",
+        "Cumulative volume over $500 to 560B, monthly volume in the tens of billions, ~$3.5 to 4B open interest and ~95 to 98% of HIP-3 activity."
+      ],
+      "pointsInfo": "No native token, no points and no airdrop. You earn Hyperliquid staking discounts, referrals and Growth Mode fee cuts; the protocol keeps 50% of HIP-3 trading fees.",
+      "fundingInfo": "No confirmed external round (earlier $200M / $1.5B valuation rumors were dismissed). It is closely linked to Hyperliquid's Unit team and is self-sustaining through fees rather than venture capital.",
+      "speculation": [
+        "Any future rewards program is speculative. None has been announced."
+      ],
+      "hasPointsSheet": false,
+      "pointsSheetImage": null,
+      "pointsSheetAlt": null,
+      "displayOrder": 7
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+<!doctype html>
+<!--
+  OG cover source. Rendered once to /assets/og-cover.png with headless Chrome:
+    npm start &
+    "/Applications/Google Chrome 2.app/Contents/MacOS/Google Chrome" \
+      --headless=new --disable-gpu --hide-scrollbars --window-size=1200,630 \
+      --user-data-dir=/tmp/og-chrome --screenshot=assets/og-cover.png \
+      http://localhost:4173/tools/og.html
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>OG cover</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <style>
+    html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+    body {
+      position: relative;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(115% 85% at 8% -18%, rgba(46, 230, 168, 0.24), transparent 55%),
+        radial-gradient(95% 80% at 100% 0%, rgba(109, 94, 252, 0.24), transparent 55%),
+        linear-gradient(180deg, #06080e, #03050a);
+    }
+    .grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+      background-size: 72px 72px;
+      -webkit-mask-image: radial-gradient(110% 80% at 50% -10%, #000 20%, transparent 75%);
+      mask-image: radial-gradient(110% 80% at 50% -10%, #000 20%, transparent 75%);
+    }
+    .frame {
+      position: absolute;
+      inset: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 34px;
+      pointer-events: none;
+    }
+    .content { position: relative; text-align: center; padding: 0 60px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 20px;
+      border-radius: 999px;
+      background: rgba(46, 230, 168, 0.12);
+      border: 1px solid rgba(46, 230, 168, 0.3);
+      color: #45f2bb;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .eyebrow i { width: 9px; height: 9px; border-radius: 50%; background: #2ee6a8; display: block; }
+    h1 {
+      margin: 26px 0 0;
+      font-size: 88px;
+      font-weight: 800;
+      letter-spacing: -0.045em;
+      line-height: 0.98;
+      color: #f4f8ff;
+    }
+    h1 span { color: #2ee6a8; }
+    .sub {
+      margin: 24px auto 0;
+      max-width: 800px;
+      font-size: 27px;
+      line-height: 1.45;
+      color: #a9b4c6;
+      font-weight: 500;
+    }
+    .logos {
+      margin-top: 44px;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+    .logos img {
+      width: 74px;
+      height: 74px;
+      border-radius: 23px;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: 0 18px 40px -22px rgba(0, 0, 0, 0.95);
+    }
+    .handle {
+      position: absolute;
+      left: 62px;
+      bottom: 54px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 26px;
+      font-weight: 700;
+      color: #eef2f8;
+    }
+    .handle img { width: 44px; height: 44px; }
+    .badge {
+      position: absolute;
+      right: 62px;
+      bottom: 54px;
+      font-size: 19px;
+      font-weight: 650;
+      color: #8b95a7;
+      letter-spacing: 0.02em;
+    }
+    .badge b { color: #2ee6a8; }
+  </style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="frame"></div>
+
+  <div class="content">
+    <span class="eyebrow"><i></i> Perp DEX farming, decoded</span>
+    <h1>Your guide to farming<br /><span>Perp DEXs</span></h1>
+    <p class="sub">Points sheets, latest updates, rewards and funding — the venues worth farming, all in one place.</p>
+    <div class="logos">
+      <img src="/assets/logos/arcus.webp" alt="" />
+      <img src="/assets/logos/entropy.webp" alt="" />
+      <img src="/assets/logos/qfex.webp" alt="" />
+      <img src="/assets/logos/vesper.webp" alt="" />
+      <img src="/assets/logos/ondo.webp" alt="" />
+      <img src="/assets/logos/hyperliquid.webp" alt="" />
+      <img src="/assets/logos/tradexyz.webp" alt="" />
+    </div>
+  </div>
+
+  <div class="handle">
+    <img src="/assets/brand/x-logo.webp" alt="" />
+    @justkennethape
+  </div>
+  <div class="badge"><b>7</b> venues tracked &nbsp;·&nbsp; Updated Oct 2026</div>
+</body>
+</html>

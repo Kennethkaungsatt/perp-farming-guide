@@ -1,0 +1,12 @@
+{
+  "$comment": "Site-wide copy and metadata. Edit these values to update the hero, footer and dates everywhere.",
+  "siteName": "Perp Farming Guide",
+  "tagline": "Your guide to farming Perp DEXs",
+  "siteUrl": "https://your-domain.com",
+  "lastUpdated": "2026-10-11",
+  "profile": {
+    "handle": "@justkennethape",
+    "url": "https://x.com/justkennethape"
+  },
+  "referralNote": "Referral links: I may earn rewards if you sign up through them. Not financial advice. DYOR."
+}

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Page not found — Perp Farming Guide</title>
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#05070c" />
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #05070c;
+      color: #eef2f8;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      text-align: center;
+      padding: 24px;
+    }
+    h1 { font-size: clamp(2rem, 8vw, 3rem); margin: 0 0 12px; letter-spacing: -0.03em; }
+    p { color: #a9b4c6; margin: 0 0 26px; }
+    a {
+      display: inline-block;
+      padding: 13px 24px;
+      border-radius: 13px;
+      background: linear-gradient(180deg, #45f2bb, #12cf93);
+      color: #04150e;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    a:focus-visible { outline: 2px solid #2ee6a8; outline-offset: 3px; }
+  </style>
+  <script>
+    /* Hosts without an SPA rewrite (e.g. GitHub Pages) land here. Send the
+       visitor home; js/app.js will restore the correct view from there. */
+    setTimeout(function () {
+      if (location.pathname !== '/404.html') location.replace('/');
+    }, 800);
+  </script>
+</head>
+<body>
+  <main>
+    <h1>404 — page not found</h1>
+    <p>That page does not exist on the Perp Farming Guide.</p>
+    <a href="/">Back to the guide</a>
+  </main>
+</body>
+</html>
