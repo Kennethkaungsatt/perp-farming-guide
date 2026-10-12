@@ -1,5 +1,8 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/perp-dex-list", "destination": "/index.html" },
+    { "source": "/perp-dex-list/", "destination": "/index.html" },
+    { "source": "/points-sheet", "destination": "/index.html" },
+    { "source": "/points-sheet/", "destination": "/index.html" }
   ]
 }
