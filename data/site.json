@@ -2,7 +2,7 @@
   "$comment": "Site-wide copy and metadata. Edit these values to update the hero, footer and dates everywhere.",
   "siteName": "Perp Farming Guide",
   "tagline": "Your guide to farming Perp DEXs",
-  "siteUrl": "https://your-domain.com",
+  "siteUrl": "https://perp-farming-guide.vercel.app",
   "lastUpdated": "2026-10-11",
   "profile": {
     "handle": "@justkennethape",
